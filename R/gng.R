@@ -231,7 +231,7 @@ gng <- function(X, max.iter = 20000, epsilon.b = .05, epsilon.n = .001, age.max 
   if (make.projection) {
     nodes.df <- data.frame(S, node.proj, check.names = F)
     rf <- randomForestSRC::rfsrc(Multivar(GNG_X, GNG_Y) ~ ., nodes.df)
-    pred <- predict(rf, data.frame(X))
+    pred <- predict(rf, data.frame(X, check.names = F, stringsAsFactors = F))
     space.proj <- sapply(colnames(node.proj), function(n) pred$regrOutput[[n]]$predicted)
   } else {
     space.proj <- NULL
@@ -258,6 +258,7 @@ gng <- function(X, max.iter = 20000, epsilon.b = .05, epsilon.n = .001, age.max 
     edge.log = edge.log,
     clustering = clustering,
     node.proj = node.proj,
-    space.proj = space.proj
+    space.proj = space.proj,
+    igraph = igr
   )
 }
