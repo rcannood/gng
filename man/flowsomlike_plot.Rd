@@ -7,7 +7,7 @@
 flowsomlike_plot(gng.fit, labels, max.size = 0.075)
 }
 \arguments{
-\item{gng.fit}{The GNG produced by the \link{\code{gng}} function}
+\item{gng.fit}{The GNG produced by the \code{\link{gng}} function}
 
 \item{labels}{Labels for the training samples}
 

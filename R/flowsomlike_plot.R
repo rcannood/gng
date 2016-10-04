@@ -1,6 +1,6 @@
 #' Produce a FlowSOM-like plot
 #'
-#' @param gng.fit The GNG produced by the \link{\code{gng}} function
+#' @param gng.fit The GNG produced by the \code{\link{gng}} function
 #' @param labels Labels for the training samples
 #' @param max.size The maximum size of visualised nodes
 #'
