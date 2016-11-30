@@ -29,7 +29,7 @@
 #'
 #' @examples
 #' # To be added soon!
-gng <- function(X, max.iter = 20000, epsilon.b = .05, epsilon.n = .001, age.max = 200, max.nodes = 30, lambda = 200, alpha = .5, beta = .99, make.projection = T, make.logs = F, verbose = T) {
+gng <- function(X, max.iter = 20000, epsilon.b = .05, epsilon.n = .001, age.max = 200, max.nodes = 30, lambda = 200, alpha = .5, beta = .99, make.projection = T, make.logs = F, verbose = T, use.mindist = F, weights = NULL) {
   # Calculate ranges of the dimensionality of the dataset
   ranges <- apply(X, 2, range)
 
@@ -59,13 +59,31 @@ gng <- function(X, max.iter = 20000, epsilon.b = .05, epsilon.n = .001, age.max 
 
   # I separated out the distance and move functions in case I want to try a different approach
   distance.function <- function(Xi, Si) {
-    sqrt(mean((Xi - Si)^2))
+    diff <- Xi - Si
+    sqrt(mean(diff * diff))
   }
   move.function <- function(Xi, Si, epsilon) {
     Si + epsilon * (Xi - Si)
   }
-  sample.input.signal <- function(X) {
-    X[sample.int(nrow(X), 1),]
+  if (!is.null(weights)) {
+    sample.input.signal <- function() {
+      X[sample.int(nrow(X), 1, prob = weights),]
+    }
+  } else if (use.mindist) {
+    mindist <- apply(SCORPIUS::euclidean.distance(X, S), 1, min, na.rm=T)
+    last.mindist.iteration <- 0
+    sample.input.signal <- function() {
+      if (current.iter >= last.mindist.iteration + 1000) {
+        if (verbose) cat("Recalculating mindist at iteration ", current.iter, " because last one was at ", last.mindist.iteration, "\n", sep="")
+        mindist <<- apply(SCORPIUS::euclidean.distance(X, S), 1, min, na.rm=T)
+        last.mindist.iteration <<- current.iter
+      }
+      X[sample.int(nrow(X), 1, prob = mindist),]
+    }
+  } else {
+    sample.input.signal <- function() {
+      X[sample.int(nrow(X), 1),]
+    }
   }
 
   if (make.logs) {
@@ -89,7 +107,7 @@ gng <- function(X, max.iter = 20000, epsilon.b = .05, epsilon.n = .001, age.max 
     if (verbose && current.iter %% 1000 == 0) cat("Iteration ", current.iter, "\n", sep = "")
 
     # 1. generate input signal
-    Xi <- sample.input.signal(X)
+    Xi <- sample.input.signal()
 
     # 2. find nearest unit s1 and second nearest unit s2
     sdist <- apply(S, 1, function(Si) distance.function(Xi, Si))
@@ -229,7 +247,7 @@ gng <- function(X, max.iter = 20000, epsilon.b = .05, epsilon.n = .001, age.max 
 
   # Map the positions to the original space X
   if (make.projection) {
-    nodes.df <- data.frame(S, node.proj, check.names = F)
+    nodes.df <- data.frame(na.omit(S), node.proj, check.names = F)
     rf <- randomForestSRC::rfsrc(Multivar(GNG_X, GNG_Y) ~ ., nodes.df)
     pred <- predict(rf, data.frame(X, check.names = F, stringsAsFactors = F))
     space.proj <- sapply(colnames(node.proj), function(n) pred$regrOutput[[n]]$predicted)

@@ -6,7 +6,8 @@
 \usage{
 gng(X, max.iter = 20000, epsilon.b = 0.05, epsilon.n = 0.001,
   age.max = 200, max.nodes = 30, lambda = 200, alpha = 0.5,
-  beta = 0.99, make.projection = T, make.logs = F, verbose = T)
+  beta = 0.99, make.projection = T, make.logs = F, verbose = T,
+  use.mindist = F, weights = NULL)
 }
 \arguments{
 \item{X}{The input data}
