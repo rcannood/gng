@@ -18,4 +18,3 @@ flowSOM_wrapper(data, colsToUse, nNodes = 100, nPasses = 50, ...)
 \description{
 FlowSOM wrapper
 }
-

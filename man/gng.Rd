@@ -4,23 +4,22 @@
 \alias{gng}
 \title{Growing Neural Gas}
 \usage{
-gng(X, max.iter = 20000, epsilon.b = 0.05, epsilon.n = 0.001,
-  age.max = 200, max.nodes = 30, lambda = 200, alpha = 0.5,
-  beta = 0.99, make.projection = T, make.logs = F, verbose = T,
-  use.mindist = F, weights = NULL)
+gng(x, max_iter = 20000, epsilon_b = 0.05, epsilon_n = 0.001,
+  age_max = 200, max_nodes = 30, lambda = 200, alpha = 0.5,
+  beta = 0.99, verbose = T, make_logs = F, cpp = T)
 }
 \arguments{
-\item{X}{The input data}
+\item{x}{The input data}
 
-\item{max.iter}{The max number of iterations}
+\item{max_iter}{The max number of iterations}
 
-\item{epsilon.b}{Move the winning node by epsilon.b times the distance}
+\item{epsilon_b}{Move the winning node by epsilon_b times the distance}
 
-\item{epsilon.n}{Move the neighbours of the winning node by epsilon.n times the distance}
+\item{epsilon_n}{Move the neighbours of the winning node by epsilon_n times the distance}
 
-\item{age.max}{Remove edges older than age.max}
+\item{age_max}{Remove edges older than age_max}
 
-\item{max.nodes}{The maximum number of nodes}
+\item{max_nodes}{The maximum number of nodes}
 
 \item{lambda}{Insert new nodes every lambda iterations}
 
@@ -28,11 +27,11 @@ gng(X, max.iter = 20000, epsilon.b = 0.05, epsilon.n = 0.001,
 
 \item{beta}{The decay parameter for error in every node every iteration}
 
-\item{make.projection}{Project the points from X to a 2D plane}
-
-\item{make.logs}{The decay for error of all nodes every iteration}
-
 \item{verbose}{Will output progress if \code{TRUE}}
+
+\item{make_logs}{The decay for error of all nodes every iteration}
+
+\item{cpp}{Whether or not to use the C++ implementation over the R implementation.}
 }
 \value{
 The GNG (need to be more specific in the future).
@@ -48,4 +47,3 @@ Step 1, generating the input signal could be improved upon.
 \references{
 Fritzke, Bernd. "A growing neural gas network learns topologies." Advances in neural information processing systems 7 (1995): 625-632.
 }
-

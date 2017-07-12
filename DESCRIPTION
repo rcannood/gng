@@ -7,4 +7,8 @@ Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
+Imports: Rcpp (>= 0.11.4)
+LinkingTo: Rcpp, BH, RcppProgress
+URL: http://www.github.com/rcannood/GNG
+BugReports: https://github.com/rcannood/GNG/issues

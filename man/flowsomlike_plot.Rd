@@ -19,4 +19,3 @@ Produce a FlowSOM-like plot
 \examples{
 # To be added soon!
 }
-
