@@ -4,10 +4,10 @@
 \alias{flowsomlike_plot}
 \title{Produce a FlowSOM-like plot}
 \usage{
-flowsomlike_plot(gng.fit, labels, max.size = 0.075)
+flowsomlike_plot(gng_fit, labels, max.size = 0.075)
 }
 \arguments{
-\item{gng.fit}{The GNG produced by the \code{\link{gng}} function}
+\item{gng_fit}{The GNG produced by the \code{\link{gng}} function}
 
 \item{labels}{Labels for the training samples}
 

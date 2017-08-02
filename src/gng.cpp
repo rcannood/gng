@@ -230,9 +230,9 @@ List gng_cpp(NumericMatrix x, int max_iterations, float epsilon_b, float epsilon
   int nodedf_i = 0;
   for (vp = vertices(graph); vp.first != vp.second; ++vp.first) {
     Vertex node = *vp.first;
-    int index = graph[node].index+1;
+    int index = graph[node].index;
     nodedf_index(nodedf_i) = index;
-    nodedf_names(nodedf_i) = "Comp" + boost::lexical_cast<std::string>(index);
+    nodedf_names(nodedf_i) = "Node" + boost::lexical_cast<std::string>(index);
     nodedf_error(nodedf_i) = graph[node].error;
     node_space(nodedf_i, _) = graph[node].position;
     nodedf_i++;
@@ -256,8 +256,8 @@ List gng_cpp(NumericMatrix x, int max_iterations, float epsilon_b, float epsilon
   for (ep = edges(graph); ep.first != ep.second; ++ep.first) {
     Edge edge = *ep.first;
 
-    edgedf_from(edgedf_i) = graph[boost::source(edge, graph)].index+1;
-    edgedf_to(edgedf_i) = graph[boost::target(edge, graph)].index+1;
+    edgedf_from(edgedf_i) = graph[boost::source(edge, graph)].index;
+    edgedf_to(edgedf_i) = graph[boost::target(edge, graph)].index;
     edgedf_age(edgedf_i) = graph[edge].age;
 
     edgedf_i++;

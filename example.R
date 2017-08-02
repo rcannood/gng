@@ -10,13 +10,14 @@ data(ginhoux)
 dist <- correlation.distance(ginhoux$expression)
 X <- reduce.dimensionality(dist, ndim = 5)
 
-gng.fit <- gng(X)
+gng_out <- gng(X)
+gng_proj <- gng_project(gng_out)
 
 group.name <- ginhoux$sample.info$group.name
 
 g1 <- flowsomlike_plot(gng.fit, group.name, max.size = .075)
 
-space.df <- data.frame(gng.fit$space.proj, group.name)
+space.df <- data.frame(gng.fit$space_proj, group.name)
 g2 <- ggplot() + geom_point(aes(GNG_X, GNG_Y, colour = group.name), space.df)
 
 cowplot::plot_grid(g1, g2, nrow = 1)

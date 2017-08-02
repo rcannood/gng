@@ -31,14 +31,17 @@
 #' # To be added soon!
 gng <- function(x, max_iter = 20000, epsilon_b = .05, epsilon_n = .001, age_max = 200, max_nodes = 30, lambda = 200, alpha = .5, beta = .99, verbose = T, make_logs = F, cpp = T) {
   if (cpp) {
-    gng_cpp(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose)
+    o <- gng_cpp(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose)
   } else {
-    gng_r(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose, make_logs)
+    o <- gng_r(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose, make_logs)
   }
+  # Determine assignment of the samples to the nodes
+  o$clustering <- apply(x, 1, function(xi) which.min(apply(o$node_space, 1, function(si) mean((xi-si)^2))))
+  o
 }
 
 
-gng_r <- function(x, max_iterations, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose, make_logs) {
+gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose, make_logs) {
   # Calculate ranges of the dimensionality of the dataset
   ranges <- apply(x, 2, range)
 
@@ -221,10 +224,6 @@ gng_r <- function(x, max_iterations, epsilon_b, epsilon_n, age_max, max_nodes, l
     }
   }))
 
-  # Determine assignment of the samples to the nodes
-  clustering <- apply(x, 1, function(x) which.min(apply(S, 1, function(s) distance_function(x, s))))
-  nodes$number <- sapply(seq_len(nrow(nodes)), function(i) sum(clustering == i))
-
   # Process the logs
   if (make_logs) {
     edge_log <- dplyr::bind_rows(edge_loglist)
@@ -241,7 +240,6 @@ gng_r <- function(x, max_iterations, epsilon_b, epsilon_n, age_max, max_nodes, l
     nodes = nodes,
     node_space = node_space,
     edges = edges,
-    clustering = clustering,
     node_log = node_log,
     nodepos_log = nodepos_log,
     edge_log = edge_log

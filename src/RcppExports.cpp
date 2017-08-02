@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // gng_cpp
 List gng_cpp(NumericMatrix x, int max_iterations, float epsilon_b, float epsilon_n, int age_max, int max_nodes, int lambda, float alpha, float beta, bool verbose);
-RcppExport SEXP GNG_gng_cpp(SEXP xSEXP, SEXP max_iterationsSEXP, SEXP epsilon_bSEXP, SEXP epsilon_nSEXP, SEXP age_maxSEXP, SEXP max_nodesSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP verboseSEXP) {
+RcppExport SEXP _GNG_gng_cpp(SEXP xSEXP, SEXP max_iterationsSEXP, SEXP epsilon_bSEXP, SEXP epsilon_nSEXP, SEXP age_maxSEXP, SEXP max_nodesSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -27,7 +27,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"GNG_gng_cpp", (DL_FUNC) &GNG_gng_cpp, 10},
+    {"_GNG_gng_cpp", (DL_FUNC) &_GNG_gng_cpp, 10},
     {NULL, NULL, 0}
 };
 

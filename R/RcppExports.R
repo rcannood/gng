@@ -3,6 +3,6 @@
 
 #' @useDynLib GNG
 gng_cpp <- function(x, max_iterations, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose) {
-    .Call('GNG_gng_cpp', PACKAGE = 'GNG', x, max_iterations, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose)
+    .Call('_GNG_gng_cpp', PACKAGE = 'GNG', x, max_iterations, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose)
 }
 
