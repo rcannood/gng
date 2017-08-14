@@ -15,6 +15,7 @@
 #' @param lambda Insert new nodes every lambda iterations
 #' @param alpha The decay parameter for error when a node is added
 #' @param beta The decay parameter for error in every node every iteration
+#' @param assign_cluster Whether or not to assign each sample to a GNG node
 #' @param verbose Will output progress if \code{TRUE}
 #' @param make_logs The decay for error of all nodes every iteration
 #' @param cpp Whether or not to use the C++ implementation over the R implementation.
@@ -29,14 +30,16 @@
 #'
 #' @examples
 #' # To be added soon!
-gng <- function(x, max_iter = 20000, epsilon_b = .05, epsilon_n = .001, age_max = 200, max_nodes = 30, lambda = 200, alpha = .5, beta = .99, verbose = T, make_logs = F, cpp = T) {
+gng <- function(x, max_iter = 20000, epsilon_b = .05, epsilon_n = .001, age_max = 200, max_nodes = 30, lambda = 200, alpha = .5, beta = .99, assign_cluster = T, verbose = T, make_logs = F, cpp = T) {
   if (cpp) {
     o <- gng_cpp(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose)
   } else {
     o <- gng_r(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose, make_logs)
   }
   # Determine assignment of the samples to the nodes
-  o$clustering <- apply(x, 1, function(xi) which.min(apply(o$node_space, 1, function(si) mean((xi-si)^2))))
+  if (assign_cluster) {
+    o$clustering <- apply(x, 1, function(xi) which.min(apply(o$node_space, 1, function(si) mean((xi-si)^2))))
+  }
   o
 }
 

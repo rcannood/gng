@@ -6,7 +6,8 @@
 \usage{
 gng(x, max_iter = 20000, epsilon_b = 0.05, epsilon_n = 0.001,
   age_max = 200, max_nodes = 30, lambda = 200, alpha = 0.5,
-  beta = 0.99, verbose = T, make_logs = F, cpp = T)
+  beta = 0.99, assign_cluster = T, verbose = T, make_logs = F,
+  cpp = T)
 }
 \arguments{
 \item{x}{The input data}
@@ -26,6 +27,8 @@ gng(x, max_iter = 20000, epsilon_b = 0.05, epsilon_n = 0.001,
 \item{alpha}{The decay parameter for error when a node is added}
 
 \item{beta}{The decay parameter for error in every node every iteration}
+
+\item{assign_cluster}{Whether or not to assign each sample to a GNG node}
 
 \item{verbose}{Will output progress if \code{TRUE}}
 
