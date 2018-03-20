@@ -14,6 +14,8 @@ flowSOM_wrapper(data, colsToUse, nNodes = 100, nPasses = 50, ...)
 \item{nNodes}{the number of nodes}
 
 \item{nPasses}{the number of passes of the data}
+
+\item{...}{Extra params to pass to \code{\link{gng}}}
 }
 \description{
 FlowSOM wrapper

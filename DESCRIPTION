@@ -1,14 +1,31 @@
 Package: GNG
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Growing Neural Gas
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Authors@R: c(
+  person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut", "cre")))
+Description: Run Growing Neural Gas in Rcpp.
+License: GPL-3
 LazyData: TRUE
 RoxygenNote: 6.0.1
-Imports: Rcpp (>= 0.11.4)
-LinkingTo: Rcpp, BH, RcppProgress
+Imports: 
+  BH,
+  dplyr,
+  igraph,
+  magrittr,
+  methods,
+  purrr,
+  randomForestSRC,
+  Rcpp (>= 0.11.4),
+  RcppProgress,
+  stats,
+  tibble,
+  tidyr
+Suggests:
+  FlowSOM
+LinkingTo:
+  Rcpp, 
+  BH, 
+  RcppProgress
 URL: http://www.github.com/rcannood/GNG
 BugReports: https://github.com/rcannood/GNG/issues

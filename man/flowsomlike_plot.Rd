@@ -16,6 +16,3 @@ flowsomlike_plot(gng_fit, labels, max.size = 0.075)
 \description{
 Produce a FlowSOM-like plot
 }
-\examples{
-# To be added soon!
-}
