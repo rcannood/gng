@@ -20,15 +20,7 @@
 #' @param make_logs The decay for error of all nodes every iteration
 #' @param cpp Whether or not to use the C++ implementation over the R implementation.
 #'
-#' @return The GNG (need to be more specific in the future).
-#'
-#' @importFrom igraph graph_from_edgelist layout_with_fr
-#' @importFrom randomForestSRC rfsrc
-#'
 #' @export
-#'
-#' @examples
-#' # To be added soon!
 gng <- function(x, max_iter = 20000, epsilon_b = .05, epsilon_n = .001, age_max = 200, max_nodes = 30, lambda = 200, alpha = .5, beta = .99, assign_cluster = T, verbose = T, make_logs = F, cpp = T) {
   if (cpp) {
     o <- gng_cpp(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose)
@@ -254,6 +246,8 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
 #' @param make_projection Whether or not to also project the cells using a randomForest.
 #'
 #' @importFrom stats predict na.omit
+#' @importFrom randomForestSRC rfsrc
+#' @importFrom igraph graph_from_edgelist layout_with_fr
 #'
 #' @export
 gng_project <- function(gng_out, make_projection = TRUE) {
