@@ -67,7 +67,7 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
   move_function <- function(xi, Si, epsilon) {
     Si + epsilon * (xi - Si)
   }
-  sample.input.signal <- function() {
+  sample_input_signal <- function() {
     x[sample.int(nrow(x), 1),]
   }
 
@@ -92,7 +92,7 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
     if (verbose && current.iter %% 1000 == 0) cat("Iteration ", current.iter, "\n", sep = "")
 
     # 1. generate input signal
-    xi <- sample.input.signal()
+    xi <- sample_input_signal()
 
     # 2. find nearest unit s1 and second nearest unit s2
     sdist <- apply(S, 1, function(Si) distance_function(xi, Si))
