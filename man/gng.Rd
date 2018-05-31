@@ -36,16 +36,8 @@ gng(x, max_iter = 20000, epsilon_b = 0.05, epsilon_n = 0.001,
 
 \item{cpp}{Whether or not to use the C++ implementation over the R implementation.}
 }
-\value{
-The GNG (need to be more specific in the future).
-}
 \description{
 It is recommended to read the paper by Fritzke Bernd in order to gain a better insight into the given parameters.
-
-Step 1, generating the input signal could be improved upon.
-}
-\examples{
-# To be added soon!
 }
 \references{
 Fritzke, Bernd. "A growing neural gas network learns topologies." Advances in neural information processing systems 7 (1995): 625-632.

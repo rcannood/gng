@@ -2,8 +2,6 @@
 #'
 #' @description It is recommended to read the paper by Fritzke Bernd in order to gain a better insight into the given parameters.
 #'
-#' Step 1, generating the input signal could be improved upon.
-#'
 #' @references Fritzke, Bernd. "A growing neural gas network learns topologies." Advances in neural information processing systems 7 (1995): 625-632.
 #'
 #' @param x The input data
