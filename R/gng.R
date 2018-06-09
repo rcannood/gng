@@ -20,12 +20,15 @@
 gng <- function(x, max_iter = 20000, epsilon_b = .05, epsilon_n = .001, age_max = 200, max_nodes = 30, lambda = 200, alpha = .5, beta = .99, assign_cluster = T, verbose = T, make_logs = F, cpp = T) {
   if (cpp) {
     o <- gng_cpp(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose)
+    o$nodes$name <- as.character(o$nodes$name)
+    o$edges$i <- o$nodes$name[match(o$edges$i, o$nodes$index)]
+    o$edges$j <- o$nodes$name[match(o$edges$j, o$nodes$index)]
   } else {
     o <- gng_r(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose, make_logs)
   }
   # Determine assignment of the samples to the nodes
   if (assign_cluster) {
-    o$clustering <- apply(x, 1, function(xi) which.min(apply(o$node_space, 1, function(si) mean((xi-si)^2))))
+    o$clustering <- o$nodes$name[apply(x, 1, function(xi) which.min(apply(o$node_space, 1, function(si) mean((xi-si)^2))))]
   }
   o
 }

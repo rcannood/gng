@@ -10,12 +10,17 @@ LazyData: TRUE
 RoxygenNote: 6.0.1
 Imports: 
   BH,
+  cowplot,
   dplyr,
+  ggforce,
+  ggplot2,
   igraph,
   magrittr,
   methods,
   purrr,
   randomForestSRC,
+  reshape2,
+  RColorBrewer,
   Rcpp (>= 0.11.4),
   RcppProgress,
   stats,

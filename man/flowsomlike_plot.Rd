@@ -9,7 +9,7 @@ flowsomlike_plot(gng_fit, labels, max.size = 0.075)
 \arguments{
 \item{gng_fit}{The GNG produced by the \code{\link{gng}} function}
 
-\item{labels}{Labels for the training samples}
+\item{labels}{Labels for the training samples. Can also be NULL, if need be.}
 
 \item{max.size}{The maximum size of visualised nodes}
 }
