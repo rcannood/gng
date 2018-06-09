@@ -9,7 +9,7 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom reshape2 melt
 #' @importFrom cowplot theme_cowplot
-#' @importFrom ggplot2 ggplot geom_segment scale_fill_identity coord_equal labs
+#' @importFrom ggplot2 ggplot geom_segment scale_fill_identity coord_equal labs aes
 #'
 #' @export
 flowsomlike_plot <- function(gng_fit, labels, max.size = .075) {
@@ -55,7 +55,7 @@ flowsomlike_plot <- function(gng_fit, labels, max.size = .075) {
     ungroup() %>%
     mutate(colour = annotation_colours$expr[gene])
 
-  arc_df <- node_expr_df %>% mutate(r0 = 0.5 * max_size, r = (.5 + expr / 2) * max_size) %>% select(node = name, X, Y, start, end, r0, r, colour)
+  arc_df <- node_expr_df %>% mutate(r0 = 0.5 * max.size, r = (.5 + expr / 2) * max.size) %>% select(node = name, X, Y, start, end, r0, r, colour)
 
   # if labels are provided
   if (!is.null(labels)) {
@@ -85,7 +85,7 @@ flowsomlike_plot <- function(gng_fit, labels, max.size = .075) {
     # add to arc df
     arc_df <- bind_rows(
       arc_df,
-      pie_df %>% mutate(r0 = 0, r = .5 * max_size) %>% select(node = name, X, Y, start, end, r0, r, colour)
+      pie_df %>% mutate(r0 = 0, r = .5 * max.size) %>% select(node = name, X, Y, start, end, r0, r, colour)
     )
   } else {
     arc_df$r0 <- 0
@@ -94,7 +94,7 @@ flowsomlike_plot <- function(gng_fit, labels, max.size = .075) {
   # Make a line plot
   ggplot() +
     geom_segment(aes(x = i.X, xend = j.X, y = i.Y, yend = j.Y), gr_df_with_pos) +
-    ggforce::geom_circle(aes(x0 = X, y0 = Y, r = max_size), fill = "white", lay_df) +
+    ggforce::geom_circle(aes(x0 = X, y0 = Y, r = max.size), fill = "white", lay_df) +
     ggforce::geom_arc_bar(aes(x0 = X, y0 = Y, r0 = r0, r = r, start = start, end = end, fill = colour), data = arc_df %>% filter(!(start == 0 & end == 2 * pi))) +
     ggforce::geom_circle(aes(x0 = X, y0 = Y, r = r, fill = colour), data = arc_df %>% filter((start == 0 & end == 2 * pi))) +
     scale_fill_identity() +
