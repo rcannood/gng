@@ -12,6 +12,26 @@
 #' @importFrom ggplot2 ggplot geom_segment scale_fill_identity coord_equal labs aes
 #'
 #' @export
+#'
+#' @examples
+#' data(iris)
+#' gng_out <- gng(
+#'   as.matrix(iris[,1:4]),
+#'   max_iter = 20000,
+#'   epsilon_b = 0.05,
+#'   epsilon_n = 0.001,
+#'   age_max = 200,
+#'   max_nodes = 30,
+#'   lambda = 200,
+#'   alpha = 0.5,
+#'   beta = 0.99,
+#'   assign_cluster = TRUE,
+#'   verbose = TRUE,
+#'   make_logs = FALSE,
+#'   cpp = TRUE
+#' )
+#' flowsomlike_plot(gng_out, iris[,5], max.size = 0.075)
+#'
 flowsomlike_plot <- function(gng_fit, labels, max.size = .075) {
   nodes <- gng_fit$nodes %>% mutate(name = as.character(name))
   edges <- gng_fit$edges %>% mutate(i = as.character(i), j = as.character(j))
