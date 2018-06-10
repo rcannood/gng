@@ -3,3 +3,7 @@ sudo: required
 dist: trusty
 cache: packages
 bioc_required: true
+addons:
+  apt:
+    packages:
+      - libudunits2-dev                   # ggforce > units
