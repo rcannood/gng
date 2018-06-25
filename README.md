@@ -22,6 +22,6 @@ You can run gng as follows:
 
 And visualise it as follows:
 
-    plot_gng(gng_fit, iris[,5], max_size = 0.05)
+    plot_gng(gng_fit, iris[,5], max_size = 0.05, max_size_legend = .15)
 
 ![](man/figures/README_plot-1.png)
