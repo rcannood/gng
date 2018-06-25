@@ -18,11 +18,10 @@ You can run gng as follows:
 
     library(gng)
     data(iris)
-    iris2 <- 
-    gng_out <- gng(as.matrix(iris[,1:4]))
+    gng_fit <- gng(as.matrix(iris[,1:4]))
 
 And visualise it as follows:
 
-    plot_gng(gng_out, iris[,5], max.size = 0.05)
+    plot_gng(gng_fit, iris[,5], max_size = 0.05, max_size_legend = .15)
 
 ![](man/figures/README_plot-1.png)
