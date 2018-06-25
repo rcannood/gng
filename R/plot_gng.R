@@ -4,6 +4,7 @@
 #' @param plot_labels Labels for the training samples. Is NULL, by default.
 #' @param plot_expression Whether or not to plot the expression.
 #' @param max_size The maximum size of visualised nodes
+#' @param max_size_legend The maximum size of the legend nodes.
 #'
 #' @importFrom igraph graph_from_data_frame layout_with_kk
 #' @importFrom ggforce geom_circle geom_arc_bar
@@ -31,16 +32,15 @@
 #'   make_logs = FALSE,
 #'   cpp = TRUE
 #' )
-#' plot_gng(gng_out, iris[,5], max_size = 0.075)
+#' plot_gng(gng_out, iris[,5], max_size = 0.05)
 #'
 plot_gng <- function(
   gng_fit,
   plot_labels = NULL,
   plot_expression = gng_fit$node_space,
-  max_size = .075
+  max_size = .05,
+  max_size_legend = .15
 ) {
-  max_size_legend <- .2
-
   nodes <- gng_fit$nodes %>% mutate(name = as.character(name))
   edges <- gng_fit$edges %>% mutate(i = as.character(i), j = as.character(j))
 
@@ -68,7 +68,6 @@ plot_gng <- function(
   do_plot_labels <- !is.null(plot_labels) && !(is.logical(plot_labels) && !plot_labels)
 
   # If the user wants to plot the expression
-
   if (do_plot_expression) {
     annotation_colours$expr <- set_names(RColorBrewer::brewer.pal(ncol(plot_expression), "Dark2"), colnames(plot_expression))
 
@@ -91,11 +90,11 @@ plot_gng <- function(
       plot_expression_df %>%
       mutate(
         r0 = ifelse(is.null(do_plot_labels), 0, 0.5 * max_size),
-        r = ifelse(is.null(do_plot_labels), expr, .5 + expr / 2) * max_size,
+        r = { if (is.null(do_plot_labels)) expr else .5 + expr / 2 } * max_size,
         plot_label = FALSE
       ) %>%
       select(node = name, X, Y, start, end, r0, r, colour, plot_label) %>%
-      bind_rows(arc_df)
+      bind_rows(arc_df, .)
 
     # create legend plot
     num <- length(annotation_colours$expr)
@@ -116,7 +115,6 @@ plot_gng <- function(
     arc_df <- bind_rows(arc_df, leg_df)
     lay_df <- lay_df %>% add_row(name = "Expression", X = 1.4, Y = ifelse(is.null(do_plot_labels), .5, 0.75), r = max_size_legend)
   }
-
 
 
   # if labels are provided

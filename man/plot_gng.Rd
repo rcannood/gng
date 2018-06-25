@@ -5,7 +5,7 @@
 \title{Produce a FlowSOM-like plot}
 \usage{
 plot_gng(gng_fit, plot_labels = NULL, plot_expression = gng_fit$node_space,
-  max_size = 0.075)
+  max_size = 0.05, max_size_legend = 0.15)
 }
 \arguments{
 \item{gng_fit}{The GNG produced by the \code{\link{gng}} function}
@@ -15,6 +15,8 @@ plot_gng(gng_fit, plot_labels = NULL, plot_expression = gng_fit$node_space,
 \item{plot_expression}{Whether or not to plot the expression.}
 
 \item{max_size}{The maximum size of visualised nodes}
+
+\item{max_size_legend}{The maximum size of the legend nodes.}
 }
 \description{
 Produce a FlowSOM-like plot
@@ -36,6 +38,6 @@ gng_out <- gng(
   make_logs = FALSE,
   cpp = TRUE
 )
-plot_gng(gng_out, iris[,5], max_size = 0.075)
+plot_gng(gng_out, iris[,5], max_size = 0.05)
 
 }
