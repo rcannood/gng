@@ -6,8 +6,8 @@
 \usage{
 gng(x, max_iter = 20000, epsilon_b = 0.05, epsilon_n = 0.001,
   age_max = 200, max_nodes = 30, lambda = 200, alpha = 0.5,
-  beta = 0.99, assign_cluster = T, verbose = T, make_logs = F,
-  cpp = T)
+  beta = 0.99, assign_cluster = TRUE, verbose = TRUE, make_logs = FALSE,
+  cpp = TRUE)
 }
 \arguments{
 \item{x}{The input data}
@@ -32,7 +32,7 @@ gng(x, max_iter = 20000, epsilon_b = 0.05, epsilon_n = 0.001,
 
 \item{verbose}{Will output progress if \code{TRUE}}
 
-\item{make_logs}{The decay for error of all nodes every iteration}
+\item{make_logs}{Whether or not to save in-between GNG data for visualisation purposes. Only works when \code{cpp == FALSE}.}
 
 \item{cpp}{Whether or not to use the C++ implementation over the R implementation.}
 }

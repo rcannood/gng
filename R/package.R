@@ -8,5 +8,5 @@
 #' @importFrom magrittr %<>% %$% set_rownames set_colnames
 #'
 #' @docType package
-#' @name GNG-project
+#' @name gng-project
 NULL

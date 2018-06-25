@@ -1,0 +1,33 @@
+---
+output: md_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup1, include=FALSE}
+knitr::opts_chunk$set(fig.path = "man/figures/README_", warning = FALSE, message = FALSE, error = FALSE, echo = TRUE)
+```
+
+# gng
+
+[![Build Status](https://travis-ci.org/rcannood/gng.svg?branch=master)](https://travis-ci.org/rcannood/gng)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rcannood/gng?branch=master&svg=true)](https://ci.appveyor.com/project/rcannood/gng)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/gng)](https://cran.r-project.org/package=gng)
+[![Coverage Status](https://codecov.io/gh/rcannood/gng/branch/master/graph/badge.svg)](https://codecov.io/gh/rcannood/gng?branch=master)
+
+An implementation of the Growing Neural Gas algorithm in Rcpp.
+
+## Example
+
+You can run gng as follows:
+```{r iris}
+library(gng)
+data(iris)
+iris2 <- 
+gng_out <- gng(as.matrix(iris[,1:4]))
+```
+
+And visualise it as follows:
+```{r plot}
+plot_gng(gng_out, iris[,5], max.size = 0.05)
+```
