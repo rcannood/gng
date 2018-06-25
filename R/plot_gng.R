@@ -122,14 +122,3 @@ plot_gng <- function(gng_fit, labels, max.size = .075) {
     coord_equal() +
     labs(x = "X", y = "Y")
 }
-
-#' Deprecated functions
-#'
-#' Use \code{\link{plot_gng}} instead.
-#'
-#' @param ... Deprecated
-#'
-#' @export
-flowsomlike_plot <- function(...) {
-  .Deprecated("plot_gng", "gng")
-}

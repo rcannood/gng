@@ -26,8 +26,6 @@ Imports:
   stats,
   tibble,
   tidyr
-Suggests:
-  FlowSOM
 LinkingTo:
   Rcpp, 
   BH, 
