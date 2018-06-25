@@ -2,7 +2,7 @@
 % Please edit documentation in R/gng.R
 \name{flowSOM_wrapper}
 \alias{flowSOM_wrapper}
-\title{FlowSOM wrapper}
+\title{Run GNG and return as a FlowSOM object}
 \usage{
 flowSOM_wrapper(data, colsToUse, nNodes = 100, nPasses = 50, ...)
 }
@@ -18,5 +18,5 @@ flowSOM_wrapper(data, colsToUse, nNodes = 100, nPasses = 50, ...)
 \item{...}{Extra params to pass to \code{\link{gng}}}
 }
 \description{
-FlowSOM wrapper
+Run GNG and return as a FlowSOM object
 }
