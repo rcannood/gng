@@ -1,4 +1,4 @@
-Package: GNG
+Package: gng
 Type: Package
 Title: Growing Neural Gas
 Version: 0.1.0
@@ -32,5 +32,5 @@ LinkingTo:
   Rcpp, 
   BH, 
   RcppProgress
-URL: http://www.github.com/rcannood/GNG
-BugReports: https://github.com/rcannood/GNG/issues
+URL: http://www.github.com/rcannood/gng
+BugReports: https://github.com/rcannood/gng/issues

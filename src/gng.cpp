@@ -28,7 +28,7 @@ typedef boost::graph_traits<Graph>::edge_iterator Edge_iter;
 typedef boost::graph_traits<Graph>::out_edge_iterator Edge_o_iter;
 typedef boost::graph_traits<Graph>::adjacency_iterator Adj_iter;
 
-//' @useDynLib GNG
+//' @useDynLib gng
 // [[Rcpp::export]]
 List gng_cpp(NumericMatrix x, int max_iterations, float epsilon_b, float epsilon_n, int age_max, int max_nodes, int lambda, float alpha, float beta, bool verbose) {
   RNGScope rngScope;
