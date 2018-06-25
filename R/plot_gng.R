@@ -30,9 +30,9 @@
 #'   make_logs = FALSE,
 #'   cpp = TRUE
 #' )
-#' flowsomlike_plot(gng_out, iris[,5], max.size = 0.075)
+#' plot_gng(gng_out, iris[,5], max.size = 0.075)
 #'
-flowsomlike_plot <- function(gng_fit, labels, max.size = .075) {
+plot_gng <- function(gng_fit, labels, max.size = .075) {
   nodes <- gng_fit$nodes %>% mutate(name = as.character(name))
   edges <- gng_fit$edges %>% mutate(i = as.character(i), j = as.character(j))
   node_expr <- gng_fit$node_space
@@ -121,4 +121,15 @@ flowsomlike_plot <- function(gng_fit, labels, max.size = .075) {
     cowplot::theme_cowplot() +
     coord_equal() +
     labs(x = "X", y = "Y")
+}
+
+#' Deprecated functions
+#'
+#' Use \code{\link{plot_gng}} instead.
+#'
+#' @param ... Deprecated
+#'
+#' @export
+flowsomlike_plot <- function(...) {
+  .Deprecated("plot_gng", "gng")
 }
