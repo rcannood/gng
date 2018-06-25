@@ -6,4 +6,4 @@ bioc_required: true
 addons:
   apt:
     packages:
-      - libudunits2-dev                     # dynalysis > ggforce > units
+      - libudunits2-dev                     # ggforce > units
