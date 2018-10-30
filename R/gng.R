@@ -126,8 +126,9 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
     S_meta$error[[s1]] <- S_meta$error[[s1]] + sdist[[s1]]
 
     # 5. move s1 and its direct topological neighbours towards input signal by fractions epsilon_b and epsilon_n respectively
-    neighs <- E[[s1]]
     S[s1, ] <- move_function(xi, S[s1,], epsilon_b)
+
+    neighs <- E[[s1]]
     for (n1 in neighs) {
       S[n1,] <- move_function(xi, S[n1,], epsilon_n)
     }
