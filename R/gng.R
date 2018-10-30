@@ -2,19 +2,19 @@
 #'
 #' @references Fritzke, Bernd. "A growing neural gas network learns topologies." Advances in neural information processing systems 7 (1995): 625-632.
 #'
-#' @param x The input data
-#' @param max_iter The max number of iterations
-#' @param epsilon_b Move the winning node by epsilon_b times the distance
-#' @param epsilon_n Move the neighbours of the winning node by epsilon_n times the distance
-#' @param age_max Remove edges older than age_max
-#' @param max_nodes The maximum number of nodes
-#' @param lambda Insert new nodes every lambda iterations
-#' @param alpha The decay parameter for error when a node is added
-#' @param beta The decay parameter for error in every node every iteration
-#' @param assign_cluster Whether or not to assign each sample to a GNG node
-#' @param verbose Will output progress if \code{TRUE}
-#' @param make_logs Whether or not to save in-between GNG data for visualisation purposes. Only works when \code{cpp == FALSE}.
-#' @param cpp Whether or not to use the C++ implementation over the R implementation.
+#' @param x The input data. Must be a matrix!
+#' @param max_iter The max number of iterations.
+#' @param epsilon_b Move the winning node by epsilon_b times the distance.
+#' @param epsilon_n Move the neighbours of the winning node by epsilon_n times the distance.
+#' @param age_max Remove edges older than age_max.
+#' @param max_nodes The maximum number of nodes.
+#' @param lambda Insert new nodes every lambda iterations.
+#' @param alpha The decay parameter for error when a node is added.
+#' @param beta The decay parameter for error in every node every iteration.
+#' @param assign_cluster Whether or not to assign each sample to a GNG node.
+#' @param verbose Will output progress if \code{TRUE}.
+#' @param cpp Whether or not to use the C++ implementation over the R implementation. The C++ implementation is a lot faster.
+#' @param make_logs_at At which iterations to store the GNG, for visualisation purposes.
 #'
 #' @export
 gng <- function(
@@ -29,8 +29,8 @@ gng <- function(
   beta = .99,
   assign_cluster = TRUE,
   verbose = TRUE,
-  make_logs = FALSE,
-  cpp = TRUE
+  cpp = TRUE,
+  make_logs_at = NULL
 ) {
   if (cpp) {
     if (make_logs) stop("make_logs is only supported using the R implementaton of GNG")
@@ -39,7 +39,7 @@ gng <- function(
     o$edges$i <- o$nodes$name[match(o$edges$i, o$nodes$index)]
     o$edges$j <- o$nodes$name[match(o$edges$j, o$nodes$index)]
   } else {
-    o <- gng_r(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose, make_logs)
+    o <- gng_r(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose, make_logs_at)
   }
   # Determine assignment of the samples to the nodes
   if (assign_cluster) {
@@ -49,7 +49,7 @@ gng <- function(
 }
 
 #' @importFrom stats runif
-gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose, make_logs) {
+gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose, make_logs_at) {
   # Calculate ranges of the dimensionality of the dataset
   ranges <- apply(x, 2, range)
 
@@ -89,25 +89,21 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
     x[sample.int(nrow(x), 1),]
   }
 
-  if (make_logs) {
-    node_loglist <- list(
-      data.frame(added = T, node = c(1, 2), iteration = 0)
-    )
-    nodepos_loglist <- list(
-      data.frame(iteration = 0, node = c(1, 2), S[1:2,])
-    )
-    edge_loglist <- list(
-      data.frame(added = T, i = 1, j = 2, iteration = 0, reason = 1, age = 0)
-    )
-  }
+  current.iter <- 0L
 
-  current.iter <- 0
+  # create data structures for saving the intermediary gngs
+  log <- list()
+
+  if (current.iter %in% make_logs_at) {
+    current_log <- list(current.iter = current.iter, S = S, S_meta = S_meta, Age = Age, E = E)
+    log[[length(log) + 1]] <- current_log
+  }
 
   # while stopping criterion not met.
   # In the future, this function might check whether nodes have somewhat converged to a steady position.
-  while (current.iter < max_iter) {
-    current.iter <- current.iter + 1
-    if (verbose && current.iter %% 1000 == 0) cat("Iteration ", current.iter, "\n", sep = "")
+  while (current.iter <= max_iter) {
+    current.iter <- current.iter + 1L
+    if (verbose && current.iter %% 1000L == 0L) cat("Iteration ", current.iter, "\n", sep = "")
 
     # 1. generate input signal
     xi <- sample_input_signal()
@@ -133,10 +129,6 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
       S[n1,] <- move_function(xi, S[n1,], epsilon_n)
     }
 
-    if (make_logs) {
-      nodepos_loglist[[length(nodepos_loglist)+1]] <- data.frame(iteration = current.iter, node = c(s1, neighs), S[c(s1, neighs), , drop = F])
-    }
-
     # 6. if s1 and s2 are connected by an edge, set the age of this edge to zero. otherwise, create edge of age 0
     if (is.na(Age[[s1, s2]])) {
       E[[s1]] <- c(E[[s1]], s2)
@@ -146,10 +138,6 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
     Age[[s2, s1]] <- 0
 
     edge.nods <- unique(neighs, s2)
-
-    if (make_logs) {
-      edge_loglist[[length(edge_loglist)+1]] <- data.frame(added = Age[s1, edge.nods] <= age_max, i = s1, j = edge.nods, iteration = current.iter, reason = 2, age = Age[s1, edge.nods])
-    }
 
     # 7. remove edges with an age larger than age_max. if a point has no remaining edge, remove as well
     rem <- which(Age[s1,] > age_max)
@@ -163,10 +151,6 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
       # edge_loglist[[length(edge_loglist)+1]] <- data.frame(added = F, i = s1, j = rem, iteration = current.iter, reason = "age")
       s1rem <- c(s1, rem)
       removed.nodes <- s1rem[which(sapply(s1rem, function(i) length(E[s1rem]) == 0))]
-
-      if (make_logs && length(removed.nodes) > 0) {
-        node_loglist[[length(node_loglist)+1]] <- data.frame(added = F, node = removed.nodes, iteration = current.iter)
-      }
     }
 
     # 8. If the number of input signals generated so far is an integer multiple of a parameter lambda, insert a new node
@@ -185,10 +169,6 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
         # 8c. insert new node r halfway between p and q
         S[r,] <- (S[p,] + S[q,]) / 2
 
-        if (make_logs) {
-          nodepos_loglist[[length(nodepos_loglist)+1]] <- data.frame(iteration = current.iter, node = r, S[r, , drop = F])
-        }
-
         # 8d. remove (p, q), add (p, r) and (q, r)
         Age[p, q] <- NA
         Age[q, p] <- NA
@@ -204,16 +184,17 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
         Ep <- S_meta$error[[p]]
         Eq <- S_meta$error[[q]]
         S_meta$error[c(p, q, r)] <- c(alpha * Ep, alpha * Eq, alpha * Ep)
-
-        if (make_logs) {
-          node_loglist[[length(node_loglist)+1]] <- data.frame(added = T, node = r, iteration = current.iter+.01)
-          edge_loglist[[length(edge_loglist)+1]] <- data.frame(added = c(F, T, T), i = c(p, p, q), j = c(q, r, r), iteration = current.iter + .01, reason = 3, age = c(age_max + 1, 0, 0))
-        }
       }
     }
 
     # 9. decrease all variables by multiplying them with a constant beta
     S_meta$error <- S_meta$error * beta
+
+    # store intermediary gng if so desired
+    if (current.iter %in% make_logs_at) {
+      current_log <- list(current.iter = current.iter, S = S, S_meta = S_meta, Age = Age, E = E)
+      log[[length(log) + 1]] <- current_log
+    }
   }
 
   # Construct GNG output data structures
@@ -233,25 +214,11 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
     }
   }))
 
-  # Process the logs
-  if (make_logs) {
-    edge_log <- bind_rows(edge_loglist)
-    node_log <- bind_rows(node_loglist)
-    nodepos_log <- bind_rows(nodepos_loglist)
-    edge_log[,2:3] <- t(apply(edge_log[,2:3], 1, sort))
-  } else {
-    edge_log <- NULL
-    node_log <- NULL
-    nodepos_log <- NULL
-  }
-
   list(
     nodes = nodes,
     node_space = node_space,
     edges = edges,
-    node_log = node_log,
-    nodepos_log = nodepos_log,
-    edge_log = edge_log
+    log = log
   )
 }
 

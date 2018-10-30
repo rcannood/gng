@@ -4,8 +4,9 @@
 \alias{plot_gng}
 \title{Produce a FlowSOM-like plot}
 \usage{
-plot_gng(gng_fit, plot_labels = NULL, plot_expression = gng_fit$node_space,
-  max_size = 0.05, max_size_legend = 0.15)
+plot_gng(gng_fit, plot_labels = NULL,
+  plot_expression = gng_fit$node_space, max_size = 0.05,
+  max_size_legend = 0.15)
 }
 \arguments{
 \item{gng_fit}{The GNG produced by the \code{\link{gng}} function}
