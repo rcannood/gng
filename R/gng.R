@@ -33,13 +33,37 @@ gng <- function(
   make_logs_at = NULL
 ) {
   if (cpp) {
-    if (make_logs) stop("make_logs is only supported using the R implementaton of GNG")
-    o <- gng_cpp(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose)
+    if (!is.null(make_logs_at)) stop("make_logs_at is only supported using the R implementaton of GNG")
+
+    o <- gng_cpp(
+      x = x,
+      max_iterations = max_iter,
+      epsilon_b = epsilon_b,
+      epsilon_n = epsilon_n,
+      age_max = age_max,
+      max_nodes = max_nodes,
+      lambda = lambda,
+      alpha = alpha,
+      beta = beta,
+      verbose = verbose
+    )
     o$nodes$name <- as.character(o$nodes$name)
     o$edges$i <- o$nodes$name[match(o$edges$i, o$nodes$index)]
     o$edges$j <- o$nodes$name[match(o$edges$j, o$nodes$index)]
   } else {
-    o <- gng_r(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda, alpha, beta, verbose, make_logs_at)
+    o <- gng_r(
+      x = x,
+      max_iter = max_iter,
+      epsilon_b = epsilon_b,
+      epsilon_n = epsilon_n,
+      age_max = age_max,
+      max_nodes = max_nodes,
+      lambda = lambda,
+      alpha = alpha,
+      beta = beta,
+      verbose = verbose,
+      make_logs_at = make_logs_at
+    )
   }
   # Determine assignment of the samples to the nodes
   if (assign_cluster) {

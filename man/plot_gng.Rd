@@ -36,7 +36,7 @@ gng_out <- gng(
   beta = 0.99,
   assign_cluster = TRUE,
   verbose = TRUE,
-  make_logs = FALSE,
+  make_logs_at = NULL,
   cpp = TRUE
 )
 plot_gng(gng_out, iris[,5], max_size = 0.05)
