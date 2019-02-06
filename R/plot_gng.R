@@ -18,7 +18,7 @@
 #' @examples
 #' data(iris)
 #' gng_out <- gng(
-#'   as.matrix(iris[,1:4]),
+#'   x = as.matrix(iris[,1:4]),
 #'   max_iter = 20000,
 #'   epsilon_b = 0.05,
 #'   epsilon_n = 0.001,
@@ -29,7 +29,7 @@
 #'   beta = 0.99,
 #'   assign_cluster = TRUE,
 #'   verbose = TRUE,
-#'   make_logs = FALSE,
+#'   make_logs_at = NULL,
 #'   cpp = TRUE
 #' )
 #' plot_gng(gng_out, iris[,5], max_size = 0.05)
