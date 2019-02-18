@@ -271,7 +271,7 @@ gng_project <- function(gng_out, make_projection = TRUE) {
 
   # Map the positions to the original space x
   if (make_projection) {
-    rf <- randomForestSRC::rfsrc(Multivar(GNG_x, GNG_Y) ~ ., data.frame(stats::na.omit(gng_out$node_space), node_proj, check.names = F))
+    rf <- randomForestSRC::rfsrc(Multivar(GNG_x, GNG_Y) ~ ., data.frame(stats::na.omit(gng_out$node_space), node_proj, check.names = FALSE))
     pred <- stats::predict(rf, data.frame(x, check.names = FALSE, stringsAsFactors = FALSE))
     space_proj <- sapply(colnames(node_proj), function(n) pred$regrOutput[[n]]$predicted)
   } else {
