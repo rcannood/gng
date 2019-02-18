@@ -263,16 +263,16 @@ gng_project <- function(gng_out, make_projection = TRUE) {
   colnames(node_proj) <- c("GNG_x", "GNG_Y")
 
   # Apply minmax-scale
-  mins <- apply(node_proj, 2, min, na.rm = T)
-  maxs <- apply(node_proj, 2, max, na.rm = T)
+  mins <- apply(node_proj, 2, min, na.rm = TRUE)
+  maxs <- apply(node_proj, 2, max, na.rm = TRUE)
   scale <- maxs - mins
   scale[scale == 0] <- 1
   node_proj <- t(apply(node_proj, 1, function(x) (x - mins) / scale))
 
   # Map the positions to the original space x
   if (make_projection) {
-    rf <- randomForestSRC::rfsrc(Multivar(GNG_x, GNG_Y) ~ ., data.frame(stats::na.omit(S), node_proj, check.names = F))
-    pred <- stats::predict(rf, data.frame(x, check.names = F, stringsAsFactors = F))
+    rf <- randomForestSRC::rfsrc(Multivar(GNG_x, GNG_Y) ~ ., data.frame(stats::na.omit(gng_out$node_space), node_proj, check.names = F))
+    pred <- stats::predict(rf, data.frame(x, check.names = FALSE, stringsAsFactors = FALSE))
     space_proj <- sapply(colnames(node_proj), function(n) pred$regrOutput[[n]]$predicted)
   } else {
     space_proj <- NULL
