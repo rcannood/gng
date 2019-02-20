@@ -12,6 +12,7 @@
 #' @importFrom reshape2 melt
 #' @importFrom cowplot theme_cowplot
 #' @importFrom ggplot2 ggplot geom_segment scale_fill_identity coord_equal labs aes geom_text
+#' @importFrom utils head tail
 #'
 #' @export
 #'
