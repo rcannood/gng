@@ -25,7 +25,7 @@ Produce a FlowSOM-like plot
 \examples{
 data(iris)
 gng_out <- gng(
-  as.matrix(iris[,1:4]),
+  x = as.matrix(iris[,1:4]),
   max_iter = 20000,
   epsilon_b = 0.05,
   epsilon_n = 0.001,
