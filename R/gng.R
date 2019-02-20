@@ -261,10 +261,14 @@ gng_project <- function(gng_out, x, make_projection = TRUE) {
   igr <-
     gng_out$edges %>%
     select(i, j) %>%
-    igraph::graph_from_data_frame(directed = FALSE)
+    igraph::graph_from_data_frame(
+      vertices = gng_out$nodes$name,
+      directed = FALSE
+    )
 
   node_proj <- igraph::layout_with_fr(igr)
   colnames(node_proj) <- c("GNG_X", "GNG_Y")
+  rownames(node_proj) <- gng_out$nodes$name
 
   # Apply minmax-scale
   mins <- apply(node_proj, 2, min, na.rm = TRUE)
@@ -278,6 +282,8 @@ gng_project <- function(gng_out, x, make_projection = TRUE) {
     rf <- randomForestSRC::rfsrc(Multivar(GNG_X, GNG_Y) ~ ., data.frame(stats::na.omit(gng_out$node_space), node_proj, check.names = FALSE))
     pred <- stats::predict(rf, data.frame(x, check.names = FALSE, stringsAsFactors = FALSE))
     space_proj <- sapply(colnames(node_proj), function(n) pred$regrOutput[[n]]$predicted)
+
+    rownames(space_proj) <- rownames(x)
   } else {
     space_proj <- NULL
   }
