@@ -253,12 +253,16 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
 #'
 #' @importFrom stats predict na.omit
 #' @importFrom randomForestSRC rfsrc
-#' @importFrom igraph graph_from_edgelist layout_with_fr
+#' @importFrom igraph graph_from_data_frame layout_with_fr
 #'
 #' @export
 gng_project <- function(gng_out, x, make_projection = TRUE) {
   # Project the nodes to a 2D plane
-  igr <- igraph::graph_from_edgelist(as.matrix(gng_out$edges), directed = FALSE)
+  igr <-
+    gng_out$edges %>%
+    select(i, j) %>%
+    igraph::graph_from_data_frame(directed = FALSE)
+
   node_proj <- igraph::layout_with_fr(igr)
   colnames(node_proj) <- c("GNG_X", "GNG_Y")
 
