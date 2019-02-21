@@ -222,11 +222,11 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
   }
 
   # Construct GNG output data structures
-  nodes <- data.frame(node = seq_len(nrow(S)), S_meta[,2,drop=F])
+  nodes <- data.frame(node = seq_len(nrow(S)), S_meta[, 2, drop = FALSE])
   node_space <- S
   filt <- !is.na(node_space[,1])
-  nodes <- nodes[filt,,drop=F]
-  node_space <- node_space[filt,,drop=F]
+  nodes <- nodes[filt, , drop = FALSE]
+  node_space <- node_space[filt, , drop = FALSE]
 
   edges <- bind_rows(lapply(seq(2, nrow(S)), function(nj) {
     ni <- E[[nj]]
