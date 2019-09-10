@@ -101,18 +101,6 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
   # This variable is the index of a new node
   nextr <- 3
 
-  # I separated out the distance and move functions in case I want to try a different approach
-  distance_function <- function(xi, Si) {
-    diff <- xi - Si
-    sqrt(mean(diff * diff))
-  }
-  move_function <- function(xi, Si, epsilon) {
-    Si + epsilon * (xi - Si)
-  }
-  sample_input_signal <- function() {
-    x[sample.int(nrow(x), 1),]
-  }
-
   current.iter <- 0L
 
   # create data structures for saving the intermediary gngs
@@ -130,10 +118,10 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
     if (verbose && current.iter %% 1000L == 0L) cat("Iteration ", current.iter, "\n", sep = "")
 
     # 1. generate input signal
-    xi <- sample_input_signal()
+    xi <- x[sample.int(nrow(x), 1),]
 
     # 2. find nearest unit s1 and second nearest unit s2
-    sdist <- apply(S, 1, function(Si) distance_function(xi, Si))
+    sdist <- apply(S, 1, function(Si) sqrt(sum((xi - Si)^2)))
     sord <- order(sdist)
     s1 <- sord[[1]]
     s2 <- sord[[2]]
@@ -146,11 +134,11 @@ gng_r <- function(x, max_iter, epsilon_b, epsilon_n, age_max, max_nodes, lambda,
     S_meta$error[[s1]] <- S_meta$error[[s1]] + sdist[[s1]]
 
     # 5. move s1 and its direct topological neighbours towards input signal by fractions epsilon_b and epsilon_n respectively
-    S[s1, ] <- move_function(xi, S[s1,], epsilon_b)
+    S[s1, ] <- S[s1,] + epsilon_b * (xi - S[s1,])
 
     neighs <- E[[s1]]
     for (n1 in neighs) {
-      S[n1,] <- move_function(xi, S[n1,], epsilon_n)
+      S[n1,] <- S[n1,] + epsilon_n * (xi - S[n1,])
     }
 
     # 6. if s1 and s2 are connected by an edge, set the age of this edge to zero. otherwise, create edge of age 0
