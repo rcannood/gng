@@ -6,8 +6,7 @@
 \usage{
 gng(x, max_iter = 20000, epsilon_b = 0.05, epsilon_n = 0.001,
   age_max = 200, max_nodes = 30, lambda = 200, alpha = 0.5,
-  beta = 0.99, assign_cluster = TRUE, verbose = TRUE, cpp = TRUE,
-  make_logs_at = NULL)
+  beta = 0.99, verbose = TRUE)
 }
 \arguments{
 \item{x}{The input data. Must be a matrix!}
@@ -28,16 +27,16 @@ gng(x, max_iter = 20000, epsilon_b = 0.05, epsilon_n = 0.001,
 
 \item{beta}{The decay parameter for error in every node every iteration.}
 
-\item{assign_cluster}{Whether or not to assign each sample to a GNG node.}
-
 \item{verbose}{Will output progress if \code{TRUE}.}
-
-\item{cpp}{Whether or not to use the C++ implementation over the R implementation. The C++ implementation is a lot faster.}
-
-\item{make_logs_at}{At which iterations to store the GNG, for visualisation purposes.}
 }
 \description{
 Growing Neural Gas
+}
+\examples{
+library(ggplot2)
+x <- as.matrix(iris[,1:4])
+gng_out <- gng(x, max_nodes = 10)
+autoplot(gng_out)
 }
 \references{
 Fritzke, Bernd. "A growing neural gas network learns topologies." Advances in neural information processing systems 7 (1995): 625-632.

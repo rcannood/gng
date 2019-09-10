@@ -17,11 +17,12 @@ Example
 You can run gng as follows:
 
     library(gng)
+    library(ggplot2)
     data(iris)
-    gng_fit <- gng(as.matrix(iris[,1:4]))
+    gng_fit <- gng(as.matrix(iris[,1:4]), max_nodes = 10)
 
 And visualise it as follows:
 
-    plot_gng(gng_fit, iris[,5], max_size = 0.05, max_size_legend = .15)
+    autoplot(gng_fit)
 
 ![](man/figures/README_plot-1.png)
