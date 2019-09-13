@@ -1,6 +1,7 @@
 #' Growing Neural Gas
 #'
-#' @references Fritzke, Bernd. "A growing neural gas network learns topologies." Advances in neural information processing systems 7 (1995): 625-632.
+#' @references Fritzke, Bernd. "A growing neural gas network learns topologies."
+#'   Advances in neural information processing systems 7 (1995): 625-632.
 #'
 #' @param x The input data. Must be a matrix!
 #' @param max_iter The max number of iterations.
