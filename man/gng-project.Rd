@@ -3,8 +3,7 @@
 \docType{package}
 \name{gng-project}
 \alias{gng-project}
-\alias{gng-project-package}
 \title{Growing Neural Gas}
 \description{
-Growing Neural Gas
+An Rcpp implementation of the Growing Neural Gas algorithm.
 }

@@ -4,9 +4,13 @@
 \alias{plot_gng}
 \title{Produce a FlowSOM-like plot}
 \usage{
-plot_gng(gng_fit, plot_labels = NULL,
-  plot_expression = gng_fit$node_space, max_size = 0.05,
-  max_size_legend = 0.15)
+plot_gng(
+  gng_fit,
+  plot_labels = NULL,
+  plot_expression = gng_fit$node_space,
+  max_size = 0.05,
+  max_size_legend = 0.15
+)
 }
 \arguments{
 \item{gng_fit}{The GNG produced by the \code{\link{gng}} function}
@@ -24,21 +28,7 @@ Produce a FlowSOM-like plot
 }
 \examples{
 data(iris)
-gng_out <- gng(
-  x = as.matrix(iris[,1:4]),
-  max_iter = 20000,
-  epsilon_b = 0.05,
-  epsilon_n = 0.001,
-  age_max = 200,
-  max_nodes = 30,
-  lambda = 200,
-  alpha = 0.5,
-  beta = 0.99,
-  assign_cluster = TRUE,
-  verbose = TRUE,
-  make_logs_at = NULL,
-  cpp = TRUE
-)
-plot_gng(gng_out, iris[,5], max_size = 0.05)
+gng_fit <- gng(x = as.matrix(iris[,1:4]))
+plot_gng(gng_fit, plot_labels = iris[,5], max_size = 0.05)
 
 }

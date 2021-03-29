@@ -1,24 +1,24 @@
-gng
-===
+# gng: Growing Neural Gas in RCpp
 
-[![Build
-Status](https://travis-ci.org/rcannood/gng.svg?branch=master)](https://travis-ci.org/rcannood/gng)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/rcannood/gng?branch=master&svg=true)](https://ci.appveyor.com/project/rcannood/gng)
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/rcannood/gng/workflows/R-CMD-check/badge.svg)](https://github.com/rcannood/gng/actions)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/gng)](https://cran.r-project.org/package=gng)
 [![Coverage
 Status](https://codecov.io/gh/rcannood/gng/branch/master/graph/badge.svg)](https://codecov.io/gh/rcannood/gng?branch=master)
+<!-- badges: end -->
 
 An implementation of the Growing Neural Gas algorithm in Rcpp.
 
-Example
--------
+## Example
 
 You can run gng as follows:
 
     library(gng)
     data(iris)
-    gng_fit <- gng(as.matrix(iris[,1:4]))
+
+    x <- as.matrix(iris[,1:4])
+    gng_fit <- gng(x)
 
 And visualise it as follows:
 

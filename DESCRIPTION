@@ -1,34 +1,34 @@
-Package: gng
 Type: Package
-Title: Growing Neural Gas
+Package: gng
+Title: Growing Neural Gas in 'Rcpp'
 Version: 0.1.0
 Authors@R: c(
   person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut", "cre")))
-Description: Run Growing Neural Gas in Rcpp.
+Description: An 'Rcpp' implementation of the 'Growing Neural Gas' algorithm.
 License: GPL-3
-LazyData: TRUE
-RoxygenNote: 6.1.1
+URL: http://www.github.com/rcannood/gng
+BugReports: https://github.com/rcannood/gng/issues
 Imports: 
   BH,
-  cowplot,
   dplyr,
+  dynutils,
   ggforce,
   ggplot2,
   igraph,
-  magrittr,
-  methods,
   purrr,
-  randomForestSRC,
-  reshape2,
   RColorBrewer,
   Rcpp (>= 0.11.4),
   RcppProgress,
   stats,
   tibble,
   tidyr
+Suggests:
+    randomForestSRC,
+    covr
 LinkingTo:
   Rcpp, 
   BH, 
   RcppProgress
-URL: http://www.github.com/rcannood/gng
-BugReports: https://github.com/rcannood/gng/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1

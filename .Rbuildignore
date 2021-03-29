@@ -4,3 +4,5 @@
 ^\.git$
 ^appveyor\.yml$
 ^README\.Rmd$
+^\.github$
+^codecov\.yml$

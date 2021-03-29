@@ -4,10 +4,21 @@
 \alias{gng}
 \title{Growing Neural Gas}
 \usage{
-gng(x, max_iter = 20000, epsilon_b = 0.05, epsilon_n = 0.001,
-  age_max = 200, max_nodes = 30, lambda = 200, alpha = 0.5,
-  beta = 0.99, assign_cluster = TRUE, verbose = TRUE, cpp = TRUE,
-  make_logs_at = NULL)
+gng(
+  x,
+  max_iter = 20000,
+  epsilon_b = 0.05,
+  epsilon_n = 0.001,
+  age_max = 200,
+  max_nodes = 30,
+  lambda = 200,
+  alpha = 0.5,
+  beta = 0.99,
+  assign_cluster = TRUE,
+  verbose = TRUE,
+  cpp = TRUE,
+  make_logs_at = NULL
+)
 }
 \arguments{
 \item{x}{The input data. Must be a matrix!}
@@ -34,7 +45,7 @@ gng(x, max_iter = 20000, epsilon_b = 0.05, epsilon_n = 0.001,
 
 \item{cpp}{Whether or not to use the C++ implementation over the R implementation. The C++ implementation is a lot faster.}
 
-\item{make_logs_at}{At which iterations to store the GNG, for visualisation purposes.}
+\item{make_logs_at}{At which iterations to store the GNG for visualisation purposes, only usable when \code{cpp == FALSE}.}
 }
 \description{
 Growing Neural Gas
