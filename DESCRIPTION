@@ -11,6 +11,7 @@ BugReports: https://github.com/rcannood/gng/issues
 Imports: 
   dplyr,
   dynutils,
+  FNN,
   ggforce,
   ggplot2,
   igraph,

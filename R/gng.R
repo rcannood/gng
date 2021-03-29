@@ -17,6 +17,14 @@
 #' @param make_logs_at At which iterations to store the GNG for visualisation purposes, only usable when `cpp == FALSE`.
 #'
 #' @export
+#'
+#' @importFrom FNN knnx.index
+#'
+#' @examples
+#' data(iris)
+#' gng_fit <- gng(x = as.matrix(iris[,1:4]))
+#' plot_gng(gng_fit, plot_labels = iris[,5], max_size = 0.05)
+#'
 gng <- function(
   x,
   max_iter = 20000,
@@ -67,7 +75,8 @@ gng <- function(
   }
   # Determine assignment of the samples to the nodes
   if (assign_cluster) {
-    o$clustering <- o$nodes$name[apply(x, 1, function(xi) which.min(apply(o$node_space, 1, function(si) mean((xi-si)^2))))]
+    node_ix <- FNN::knnx.index(o$node_space, x, k = 1)[,1]
+    o$clustering <- o$nodes$name[node_ix]
   }
   o
 }

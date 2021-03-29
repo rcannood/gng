@@ -3,6 +3,7 @@
 export(gng)
 export(plot_gng)
 export(project_gng)
+importFrom(FNN,knnx.index)
 importFrom(RColorBrewer,brewer.pal)
 importFrom(dplyr,.data)
 importFrom(dplyr,arrange)

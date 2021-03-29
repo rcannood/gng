@@ -50,6 +50,12 @@ gng(
 \description{
 Growing Neural Gas
 }
+\examples{
+data(iris)
+gng_fit <- gng(x = as.matrix(iris[,1:4]))
+plot_gng(gng_fit, plot_labels = iris[,5], max_size = 0.05)
+
+}
 \references{
 Fritzke, Bernd. "A growing neural gas network learns topologies." Advances in neural information processing systems 7 (1995): 625-632.
 }
