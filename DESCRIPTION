@@ -9,7 +9,6 @@ License: GPL-3
 URL: http://www.github.com/rcannood/gng
 BugReports: https://github.com/rcannood/gng/issues
 Imports: 
-  BH,
   dplyr,
   dynutils,
   ggforce,
@@ -18,7 +17,6 @@ Imports:
   purrr,
   RColorBrewer,
   Rcpp (>= 0.11.4),
-  RcppProgress,
   stats,
   tibble,
   tidyr
