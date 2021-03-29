@@ -20,7 +20,7 @@ An implementation of the Growing Neural Gas algorithm in Rcpp.
 
 ## Example
 
-You can run gng as follows:
+Here's an example of running a GNG on the iris dataset (which, arguably, doesn't make much sense).
 ```{r iris}
 library(gng)
 data(iris)
@@ -29,7 +29,9 @@ x <- as.matrix(iris[,1:4])
 gng_fit <- gng(x)
 ```
 
-And visualise it as follows:
+You can visualise the GNG nodes as follows.
 ```{r plot, fig.width=8, fig.height=6}
-plot_gng(gng_fit, iris[,5], max_size = 0.05, max_size_legend = .15)
+plot_gng(gng_fit, plot_labels = iris[,5])
+plot_gng(gng_fit, plot_labels = iris[,5], plot_expression = NULL)
+plot_gng(gng_fit)
 ```

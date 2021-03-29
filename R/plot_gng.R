@@ -106,7 +106,7 @@ plot_gng <- function(
 
 
   # if labels are provided
-  if (!is.null(plot_labels)) {
+  if (do_plot_labels) {
     clustering <- gng_fit$clustering
 
     # check how many of each label are in each node
@@ -152,13 +152,26 @@ plot_gng <- function(
       start = rads %>% head(-1),
       end = rads %>% tail(-1),
       r0 = 0,
-      r = ifelse(is.null(do_plot_expression), 1, .5) * max_size_legend,
+      r = ifelse(do_plot_expression, 1, .5) * max_size_legend,
       colour = annotation_colours$count,
       plot_label = TRUE
     )
 
     arc_df <- bind_rows(arc_df, leg_df)
     lay_df <- lay_df %>% add_row(name = "Expression", X = 1.4, Y = ifelse(is.null(do_plot_labels), .5, 0.25), r = max_size_legend)
+  }
+
+  if (!do_plot_labels && !do_plot_expression) {
+    arc_df <- lay_df %>%
+      rename(node = .data$name) %>%
+      mutate(
+        start = 0,
+        end = 2 * pi,
+        r0 = 0,
+        colour = "lightgray",
+        plot_label = FALSE
+      ) %>%
+      bind_rows(arc_df)
   }
 
   # Make a line plot
