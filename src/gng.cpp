@@ -89,7 +89,7 @@ List gng_cpp(NumericMatrix x, int max_iterations, float epsilon_b, float epsilon
     p.increment(); // update progress
 
     if (current_iter % 10000 == 0 && Progress::check_abort() )
-      return NULL;
+      return List::create();
 
     // 1. generate input signal
     int i = floor(R::runif(0, num_samples));
